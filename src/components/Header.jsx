@@ -1,6 +1,8 @@
-import { SearchIcon , CloudIcon } from "lucide-react";
+import { SearchIcon, CloudIcon } from "lucide-react";
+import { useState } from "react";
 
 const Header = () => {
+    const [dia , setDia] = useState('Hoy')
     return (
         <div className="w-full mx-auto p-6 bg-gradient-to-t from-purple-700 to-purple-400 rounded-xl shadow-lg text-white">
             <header className="flex justify-between items-center mb-4">
@@ -22,6 +24,20 @@ const Header = () => {
                     </div>
                 </div>
             </div>
+            <section className="">
+                <div className="flex space-x-2 mb-6">
+                    {['Hoy', 'Mañana', '10 dias'].map((tab) => (
+                        <button
+                            key={tab}
+                            className={`flex-1 py-2 px-4 rounded-full ${dia === tab ? 'bg-white text-purple-600' : 'bg-purple-500'
+                                }`}
+                            onClick={() => setDia(tab)}
+                        >
+                            {tab}
+                        </button>
+                    ))}
+                </div>
+            </section>
         </div>
     );
 };

@@ -1,15 +1,17 @@
+import Clima from "./components/Clima"
 import Stadistics from "./components/DashboardStas"
 import Header from "./components/Header"
 
 function App() {
 
   return (
-    <body className="bg-[#f6edff]">
+    <div className="bg-[#f6edff]">
       <main className="mx-auto container ">
         <Header />
         <Stadistics />
+        <Clima/>
       </main>
-    </body>
+    </div>
   )
 }
 

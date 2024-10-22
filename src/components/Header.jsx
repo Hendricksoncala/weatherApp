@@ -1,28 +1,17 @@
-import { useState } from "react";
-import { SearchIcon, CloudIcon } from "lucide-react";
-import useWeather from '../useWeather'; 
+import { SunIcon, CloudIcon, SnowflakeIcon } from "lucide-react";
 
-const Header = () => {
-    const [selectedLocation, setSelectedLocation] = useState('Floridablanca');
-    const { selectedDay, setSelectedDay, forecast, loading, error, changeLocation } = useWeather(selectedLocation);
-
+const Header = ({ selectedLocation, onLocationChange, forecast, selectedDay, setSelectedDay }) => {
     const handleLocationChange = (e) => {
         const newLocation = e.target.value;
-        setSelectedLocation(newLocation);
-        changeLocation(newLocation);
+        onLocationChange(newLocation);
     };
 
-    if (loading) {
-        return <div>Loading...</div>;
-    }
-
-    if (error) {
-        return <div>Error loading weather data: {error.message}</div>;
-    }
+    const getIconUrl = (iconPath) => {
+        return `https:${iconPath}`;
+    };
 
     return (
         <div className="w-full mx-auto p-6 bg-gradient-to-t from-purple-700 to-purple-400 rounded-xl shadow-lg text-white mb-4">
-            {/* Header con select (no sabia comno poner inputs) */}
             <header className="flex justify-between items-center mb-4">
                 <h1 className="text-xl font-semibold">{forecast?.location?.name}, {forecast?.location?.country}</h1>
                 <div className="flex items-center space-x-2">
@@ -37,24 +26,28 @@ const Header = () => {
                         <option value="New York">New York, USA</option>
                         <option value="Sydney">Sydney, Australia</option>
                     </select>
-                    <SearchIcon className="w-5 h-5" />
                 </div>
             </header>
 
-            {/* Datos del clima */}
             <div className="mb-6">
                 <div className="flex items-center justify-between">
                     <div>
                         <p className="text-6xl font-bold">{forecast?.current?.temp_c}°</p>
-                        <p className="text-lg">Feels like {forecast?.current?.feelslike_c}°</p>
+                        <p className="text-lg">Se siente como {forecast?.current?.feelslike_c}°</p>
                     </div>
                     <div className="text-right">
-                        <CloudIcon className="w-16 h-16 inline-block" />
+                        {forecast?.current?.condition?.icon && (
+                            <img
+                                src={getIconUrl(forecast?.current?.condition?.icon)}
+                                alt="weather icon"
+                                className="w-16 h-16 inline-block"
+                            />
+                        )}
                         <p className="text-xl">{forecast?.current?.condition?.text}</p>
                     </div>
                 </div>
             </div>
-            {/* Cambiador de diasass */}
+
             <section>
                 <div className="flex space-x-2 mb-6">
                     {['Hoy', 'Mañana', '10 dias'].map((tab) => (

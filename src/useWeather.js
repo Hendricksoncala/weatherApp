@@ -1,17 +1,24 @@
 import { useState, useEffect } from 'react';
-import { getWeatherForecast } from './services/weather.service';
+import { getWeatherForecast } from './services//weather.service';
 
-const useWeather = (location = 'Floridablanca', days = 10) => {
-    const [selectedDay, setSelectedDay] = useState('Hoy');
+const useWeather = (initialLocation = 'Floridablanca', days = 1) => {
+    const [selectedLocation, setSelectedLocation] = useState(initialLocation); 
     const [forecast, setForecast] = useState(null);
-    const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(true);
-    // Obtener el pronóstico del clima
+    const [loading, setLoading] = useState(true); 
+    const [error, setError] = useState(null); 
+    const [selectedDay, setSelectedDay] = useState('Hoy');
+
+    // Función para cambiar la ubicación
+    const changeLocation = (newLocation) => {
+        setSelectedLocation(newLocation);
+    };
+
+    // Llamada a la API para obtener el pronóstico del clima
     useEffect(() => {
-        const fetchWeatherForecast = async () => {
+        const fetchWeather = async () => {
             setLoading(true);
             try {
-                const data = await getWeatherForecast(location, days);
+                const data = await getWeatherForecast(selectedLocation, days);
                 setForecast(data);
             } catch (err) {
                 setError(err);
@@ -20,15 +27,16 @@ const useWeather = (location = 'Floridablanca', days = 10) => {
             }
         };
 
-        fetchWeatherForecast();
-    }, [location, days]);
+        fetchWeather();
+    }, [selectedLocation, days]);
 
     return {
         selectedDay,
         setSelectedDay,
         forecast,
         loading,
-        error
+        error,
+        changeLocation, // Exponemos la función para cambiar la ubicación
     };
 };
 

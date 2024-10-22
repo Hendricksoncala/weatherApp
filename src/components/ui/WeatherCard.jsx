@@ -10,7 +10,7 @@ const WeatherCard = ({ day, temperatureMax, temperatureMin, condition }) => {
       <div className="flex items-center">
         <div className="text-4xl mr-2">
           {/* Aquí podrías personalizar el ícono basado en la condición del clima */}
-          {condition.includes("Cloudy") ? <CloudIcon /> : <SunIcon />}
+          {condition.includes("Nublado") ? <CloudIcon /> : <SunIcon />}
         </div>
         <div className="text-right">
           <p className="text-xl">{temperatureMax}°</p>

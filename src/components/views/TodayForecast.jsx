@@ -5,6 +5,7 @@ import Header from "../Header";
 import useWeather from '../../useWeather';
 import DayForecastChart from '../ForecastGraphic';
 import ChanceOfRain from '../Chance_of_rain';
+import SunriseSunset from '../Sunrise_Sunset';
 
 const TodayForecast = () => {
     const [selectedLocation, setSelectedLocation] = useState('Floridablanca');
@@ -40,6 +41,7 @@ const TodayForecast = () => {
                     <DayForecastChart forecast={forecast} />
                 </div>
                 <ChanceOfRain forecast={forecast} />
+                <SunriseSunset forecast={forecast} />
 
             </main>
         </div>

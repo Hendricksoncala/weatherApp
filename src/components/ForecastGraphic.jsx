@@ -20,7 +20,7 @@ ChartJS.register(
     Title,
     Tooltip,
     Legend,
-    Filler // Importamos para habilitar el relleno entre líneas
+    Filler 
 );
 
 const DayForecastChart = ({ forecast }) => {
@@ -28,10 +28,9 @@ const DayForecastChart = ({ forecast }) => {
 
     useEffect(() => {
         if (forecast && forecast.forecast && forecast.forecast.forecastday) {
-            // Mapeamos los días del pronóstico
             const days = forecast.forecast.forecastday.map(day => {
                 const date = new Date(day.date);
-                const options = { weekday: 'short' }; // Nombre corto del día (Lun, Mar, Mié, etc.)
+                const options = { weekday: 'short' }; //short name optionnn
                 return date.toLocaleDateString('es-ES', options); // Días en español
             });
 
@@ -68,7 +67,7 @@ const DayForecastChart = ({ forecast }) => {
     }, [forecast]);
 
     if (!forecast || !forecast.forecast || !forecast.forecast.forecastday) {
-        return <p>Loading forecast data...</p>; // Muestra un mensaje mientras los datos se cargan
+        return <p>Loading forecast data...</p>; 
     }
 
     const minTemp = Math.min(...forecast.forecast.forecastday.map(day => day.day.avgtemp_c)) - 5;
@@ -129,7 +128,7 @@ const DayForecastChart = ({ forecast }) => {
     };
 
     if (!chartData) {
-        return <p>Loading chart data...</p>; // Muestra un mensaje mientras los datos se cargan
+        return <p>Loading chart data...</p>;
     }
 
     return (

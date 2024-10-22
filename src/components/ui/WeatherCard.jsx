@@ -1,4 +1,4 @@
-import { CloudIcon, SunIcon } from 'lucide-react'; // Asegúrate de usar los íconos que necesites
+import { CloudIcon, SunIcon } from 'lucide-react'; 
 
 const WeatherCard = ({ day, temperatureMax, temperatureMin, condition }) => {
   return (
@@ -9,7 +9,6 @@ const WeatherCard = ({ day, temperatureMax, temperatureMin, condition }) => {
       </div>
       <div className="flex items-center">
         <div className="text-4xl mr-2">
-          {/* Aquí podrías personalizar el ícono basado en la condición del clima */}
           {condition.includes("Nublado") ? <CloudIcon /> : <SunIcon />}
         </div>
         <div className="text-right">

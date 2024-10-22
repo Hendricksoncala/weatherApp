@@ -1,4 +1,4 @@
-import { SunIcon, MoonIcon } from 'lucide-react';  // Usamos los iconos de Lucide o cualquier otro paquete
+import { SunIcon, MoonIcon } from 'lucide-react';  
 import { useEffect, useState } from 'react';
 
 const SunriseSunset = ({ forecast }) => {

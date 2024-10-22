@@ -1,6 +1,20 @@
-import { SunIcon, CloudIcon, SnowflakeIcon } from "lucide-react";
+// import { SunIcon, CloudIcon, SnowflakeIcon } from "lucide-react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useEffect } from "react";
 
 const Header = ({ selectedLocation, onLocationChange, forecast, selectedDay, setSelectedDay }) => {
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    //url --get :D
+    useEffect(() => {
+        if (location.pathname === '/10-days') {
+            setSelectedDay('10 días');
+        } else {
+            setSelectedDay('Hoy');
+        }
+    }, [location.pathname, setSelectedDay]);
+
     const handleLocationChange = (e) => {
         const newLocation = e.target.value;
         onLocationChange(newLocation);
@@ -8,6 +22,14 @@ const Header = ({ selectedLocation, onLocationChange, forecast, selectedDay, set
 
     const getIconUrl = (iconPath) => {
         return `https:${iconPath}`;
+    };
+
+    const handleDaySelection = (tab) => {
+        if (tab === '10 días') {
+            navigate('/10-days');  // 10 días
+        } else if (tab === 'Hoy') {
+            navigate('/');  // mainn osea hoy
+        }
     };
 
     return (
@@ -50,12 +72,12 @@ const Header = ({ selectedLocation, onLocationChange, forecast, selectedDay, set
 
             <section>
                 <div className="flex space-x-2 mb-6">
-                    {['Hoy', 'Mañana', '10 dias'].map((tab) => (
+                    {['Hoy', 'Mañana', '10 días'].map((tab) => (
                         <button
                             key={tab}
                             className={`flex-1 py-2 px-4 rounded-full ${selectedDay === tab ? 'bg-white text-purple-600' : 'bg-purple-500'
                                 }`}
-                            onClick={() => setSelectedDay(tab)}
+                            onClick={() => handleDaySelection(tab)}
                         >
                             {tab}
                         </button>

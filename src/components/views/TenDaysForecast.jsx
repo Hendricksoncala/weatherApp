@@ -1,33 +1,40 @@
+import { useState } from 'react';
+import useWeather from '../../useWeather'; 
 import Header from '../Header';
-import WeatherCard from '../ui/WeatherCard'; // Importa el componente de la tarjeta
+import WeatherCard from '../ui/WeatherCard';
 
 const TenDaysForecast = () => {
-    // Simulación de datos para los 10 días
-    const weatherData = [
-        { day: 'Today', temperatureMax: 3, temperatureMin: -2, condition: 'Cloudy and Sunny' },
-        { day: 'Thursday, Jan 19', temperatureMax: 3, temperatureMin: -2, condition: 'Cloudy' },
-        { day: 'Friday, Jan 20', temperatureMax: 3, temperatureMin: -2, condition: 'Cloudy' },
-        { day: 'Saturday, Jan 21', temperatureMax: 3, temperatureMin: -2, condition: 'Cloudy and Sunny' },
-        { day: 'Sunday, Jan 22', temperatureMax: 3, temperatureMin: -2, condition: 'Cloudy' },
-        { day: 'Monday, Jan 23', temperatureMax: 3, temperatureMin: -2, condition: 'Cloudy' },
-        { day: 'Tuesday, Jan 24', temperatureMax: 3, temperatureMin: -2, condition: 'Cloudy and Sunny' },
-        { day: 'Wednesday, Jan 25', temperatureMax: 3, temperatureMin: -2, condition: 'Cloudy' },
-        { day: 'Thursday, Jan 26', temperatureMax: 3, temperatureMin: -2, condition: 'Cloudy' },
-        { day: 'Friday, Jan 27', temperatureMax: 3, temperatureMin: -2, condition: 'Cloudy and Sunny' },
-    ];
+    const [selectedLocation, setSelectedLocation] = useState('Floridablanca');
+    const [selectedDay, setSelectedDay] = useState('Hoy');
+    const { forecast, changeLocation } = useWeather(selectedLocation, 7);
+
+    const handleLocationChange = (newLocation) => {
+        setSelectedLocation(newLocation);
+        changeLocation(newLocation);
+    };
+
+    if (!forecast || !forecast.forecast || !forecast.forecast.forecastday) {
+        return <p>Loading...</p>;
+    }
 
     return (
         <div className="p-6 bg-[#f6edff]">
             <main className="mx-auto container ">
-                <Header />
-                <h2 className="text-2xl font-bold mb-4 text-black">10-Day Forecast</h2>
-                {weatherData.map((dayData, index) => (
+                <Header
+                    selectedLocation={selectedLocation}
+                    onLocationChange={handleLocationChange}
+                    forecast={forecast}
+                    selectedDay={selectedDay}
+                    setSelectedDay={setSelectedDay}
+                />
+                <h2 className="text-2xl font-bold text-center mb-4">Pronóstico a 10 días</h2>
+                {forecast.forecast.forecastday.map((day, index) => (
                     <WeatherCard
                         key={index}
-                        day={dayData.day}
-                        temperatureMax={dayData.temperatureMax}
-                        temperatureMin={dayData.temperatureMin}
-                        condition={dayData.condition}
+                        day={new Date(day.date).toLocaleDateString('es-ES', { weekday: 'long' })}
+                        temperatureMax={day.day.maxtemp_c}
+                        temperatureMin={day.day.mintemp_c}
+                        condition={day.day.condition.text}
                     />
                 ))}
             </main>

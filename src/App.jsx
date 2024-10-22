@@ -1,13 +1,15 @@
+import Stadistics from "./components/DashboardStas"
 import Header from "./components/Header"
 
 function App() {
 
   return (
-    <>
-      <main className="mx-auto container">
-        <Header/>
+    <body className="bg-[#f6edff]">
+      <main className="mx-auto container ">
+        <Header />
+        <Stadistics />
       </main>
-    </>
+    </body>
   )
 }
 

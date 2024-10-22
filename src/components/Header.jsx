@@ -1,10 +1,11 @@
 import { SearchIcon, CloudIcon } from "lucide-react";
-import { useState } from "react";
+import useSelectedDay from '../useDays'; // Importamos el hook
 
 const Header = () => {
-    const [dia , setDia] = useState('Hoy')
+    const { selectedDay, changeDay } = useSelectedDay(); // Usamos el hook
+
     return (
-        <div className="w-full mx-auto p-6 bg-gradient-to-t from-purple-700 to-purple-400 rounded-xl shadow-lg text-white">
+        <div className="w-full mx-auto p-6 bg-gradient-to-t from-purple-700 to-purple-400 rounded-xl shadow-lg text-white mb-4">
             <header className="flex justify-between items-center mb-4">
                 <h1 className="text-xl font-semibold">Kharkiv, Ukraine</h1>
                 <button className="p-2">
@@ -24,14 +25,15 @@ const Header = () => {
                     </div>
                 </div>
             </div>
-            <section className="">
+
+            <section>
                 <div className="flex space-x-2 mb-6">
                     {['Hoy', 'Mañana', '10 dias'].map((tab) => (
                         <button
                             key={tab}
-                            className={`flex-1 py-2 px-4 rounded-full ${dia === tab ? 'bg-white text-purple-600' : 'bg-purple-500'
+                            className={`flex-1 py-2 px-4 rounded-full ${selectedDay === tab ? 'bg-white text-purple-600' : 'bg-purple-500'
                                 }`}
-                            onClick={() => setDia(tab)}
+                            onClick={() => changeDay(tab)}
                         >
                             {tab}
                         </button>
